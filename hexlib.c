@@ -1,6 +1,4 @@
 #include "hexlib.h"
-#include <stdio.h>
-
 
 void int_to_hex(char* dest, const char* format,
 		int* value, size_t len)
