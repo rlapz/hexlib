@@ -63,10 +63,10 @@ void byte_to_hex(char* dest,
 		const unsigned char* value, size_t len)
 {
 	size_t i, j;
-	static const char hex[] = "0123456789abcdef";
+	static const char hex[] = "0123456789ABCDEF";
 	for (i = 0, j = 0 ; i < len; i++, j += 2) {
 		dest[j + 0] = hex[0xf & (value[i] >> 4)];
 		dest[j + 1] = hex[0xf & value[i]];
 	}
-	dest[j] = 0;
+	dest[j] = '\0';
 }
