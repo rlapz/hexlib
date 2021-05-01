@@ -2,7 +2,7 @@
 
 
 static int8_t
-get_byte(const int8_t *c)
+get_dec(const int8_t *c)
 {
 	switch (*c) {
 	case '0': return 0;
@@ -26,61 +26,46 @@ get_byte(const int8_t *c)
 }
 
 int8_t *
-dec2hex(int8_t *dest, const uint32_t value, size_t len)
+dec2hex(int8_t *dest, uint32_t value, uint32_t len)
 {
-	snprintf(dest, len, "%X", value);
-	return dest;
-}
-
-int32_t
-byte2dec(const uint32_t *value, size_t len)
-{
-	int8_t tmp[len];
-	int32_t dest = 0;
-
-	snprintf(tmp, len, "%d", *value);
-	dest = strtol(tmp, NULL, 10);
-
-	return dest;
-}
-
-int8_t *
-ascii2hex(int8_t *dest, const int8_t *value, size_t len)
-{
-	int8_t tmp[len*2];
-	size_t i = 0, j = 0;
-
-	memset(tmp, '\0', sizeof(tmp));
-	for (; i < len; i++, j += 2) {
-		if (value[i] != '\0')
-			snprintf(j > 0 ? tmp+j : tmp, 3,
-					"%02X", value[i]);
+	char hex[] = "0123456789ABCDEF";
+	uint32_t iter = 0;
+	while (iter < len) {
+		dest[iter] = '0';
+		iter++;
 	}
-	strncpy(dest, tmp, len);
+	dest[iter] = '\0';
+
+	while (value > 0) {
+		dest[len-1] = hex[0xf & value];
+		value >>= 4;
+		len--;
+	}
+
 	return dest;
 }
 
 uint8_t *
-hex2byte(uint8_t *dest, const int8_t *value)
+hex2raw(uint8_t *dest, const int8_t *value)
 {
 	uint8_t c;
 	int8_t *tmp = (int8_t*)value;
 	while (*tmp) {
-		c = get_byte(tmp);
-		c = c << 4;
+		c = get_dec(tmp);
+		c <<= 4;
 		tmp++;
-		c |= get_byte(tmp);
-		tmp++;
+		c |= get_dec(tmp);
 		*dest = c;
+		tmp++;
 		dest++;
 	}
 	return dest;
 }
 
 int8_t *
-byte2hex(int8_t *dest, const uint8_t *value, size_t len)
+raw2hex(int8_t *dest, const uint8_t *value, uint32_t len)
 {
-	size_t i = 0, j = 0;
+	uint32_t i = 0, j = 0;
 	int8_t hex[] = "0123456789ABCDEF";
 	for (; i < len; i++, j += 2) {
 		dest[j + 0] = hex[0xf & (value[i] >> 4)];
