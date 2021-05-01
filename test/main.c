@@ -10,7 +10,7 @@ main(void)
 	puts(dec2hex(str, 1200, 5));
 	puts("");
 
-	int8_t *hex = "FFFFFFFF"; /* 2 byte */
+	int8_t *hex = "FFFFFFFF"; /* 4 byte */
 	uint8_t raw[4];
 	puts("--- hex to raw (byte array) ---");
 	hex2raw(raw, hex);
