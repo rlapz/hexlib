@@ -26,14 +26,14 @@ get_byte(const int8_t *c)
 }
 
 int8_t *
-dec2hex(int8_t *dest, uint32_t value, size_t len)
+dec2hex(int8_t *dest, const uint32_t value, size_t len)
 {
 	snprintf(dest, len, "%X", value);
 	return dest;
 }
 
 int32_t
-byte2dec(uint32_t *value, size_t len)
+byte2dec(const uint32_t *value, size_t len)
 {
 	int8_t tmp[len];
 	int32_t dest = 0;
