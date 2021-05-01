@@ -7,7 +7,7 @@ main(void)
 	uint32_t hex = 0xFF;
 
 	printf("%d\n", byte2dec(&hex, sizeof(tmp)));
-	printf("%s\n", dec2hex(tmp, 2000000000, sizeof(tmp)));
+	printf("%s\n", dec2hex(tmp, 23333, 10));
 
 	int8_t byte[100];
 	uint8_t h[] = {0xFF, 0xFF, 0xEE};
