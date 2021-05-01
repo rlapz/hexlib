@@ -1,27 +1,34 @@
+#include <stdio.h>
 #include "../hexlib.h"
+
 
 int
 main(void)
 {
-	char tmp[100] = {0};
-	uint32_t hex = 0xFF;
+	int8_t str[100] = {0};
+	puts("--- decimal to hex ---");
+	puts(dec2hex(str, 1200, 5));
+	puts("");
 
-	printf("%d\n", byte2dec(&hex, sizeof(tmp)));
-	printf("%s\n", dec2hex(tmp, 23333, 10));
+	int8_t *hex = "FFFFFFFF"; /* 2 byte */
+	uint8_t raw[4];
+	puts("--- hex to raw (byte array) ---");
+	hex2raw(raw, hex);
 
-	int8_t byte[100];
-	uint8_t h[] = {0xFF, 0xFF, 0xEE};
-	byte2hex(byte, h, 3);
-	printf("%s\n", byte);
+	for (int8_t i = 0; i < 4; i++)
+		printf("%d ", raw[i]);
 
-	uint8_t b[3];
-	int8_t test[] = "616364";
+	puts("\n");
 
-	hex2byte(b, test);
-	printf("%c\n", b[0]);
-	printf("%c\n", b[1]);
-	printf("%c\n", b[2]);
-	
+	uint8_t byte[4] = {0xEE, 0xEE, 0xFF, 0x0A};
+	int8_t bf[12] = {0};
+	puts("--- raw to hex ---");
+	puts(raw2hex(bf, byte, 4));
+	puts("");
+
+	int8_t x[100] = {0};
+	puts("--- ASCII to hex ---");
+	puts(raw2hex(x, (int8_t*)"hello", 5));
 
 	return 0;
 }
