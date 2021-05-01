@@ -63,14 +63,14 @@ ascii2hex(int8_t *dest, const int8_t *value, size_t len)
 uint8_t *
 hex2byte(uint8_t *dest, const int8_t *value)
 {
-	size_t len = strlen(value)/2;
 	uint8_t c;
-	while (*value) {
-		c = get_byte(value);
-		value++;
+	int8_t *tmp = (int8_t*)value;
+	while (*tmp) {
+		c = get_byte(tmp);
 		c = c << 4;
-		c |= get_byte(value);
-		value++;
+		tmp++;
+		c |= get_byte(tmp);
+		tmp++;
 		*dest = c;
 		dest++;
 	}
@@ -80,9 +80,9 @@ hex2byte(uint8_t *dest, const int8_t *value)
 int8_t *
 byte2hex(int8_t *dest, const uint8_t *value, size_t len)
 {
-	size_t i, j;
+	size_t i = 0, j = 0;
 	int8_t hex[] = "0123456789ABCDEF";
-	for (i = 0, j = 0 ; i < len; i++, j += 2) {
+	for (; i < len; i++, j += 2) {
 		dest[j + 0] = hex[0xf & (value[i] >> 4)];
 		dest[j + 1] = hex[0xf & value[i]];
 	}
