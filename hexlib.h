@@ -1,16 +1,16 @@
 #ifndef HEXLIB_H
 #define HEXLIB_H
 
+#include <stdint.h>
 #include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-void int_to_hex(char* dest, const char* format,
-		int* value, size_t len);
-void str_to_hex(char* dest, const char* value,
-		size_t len);
-void hex_to_byte(unsigned char* dest, const char* value);
-void byte_to_hex(char* dest, const unsigned char* value,
-		size_t len);
+int8_t *dec2hex(int8_t *dest, uint32_t value, size_t len);
+int32_t byte2dec(uint32_t *value, size_t len);
+int8_t *ascii2hex(int8_t *dest, const int8_t *value, size_t len);
+uint8_t *hex2byte(uint8_t *dest, const int8_t *value);
+int8_t *byte2hex(int8_t *dest, const uint8_t *value, size_t len);
+
 
 #endif
