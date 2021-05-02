@@ -1,8 +1,10 @@
 #include "hexlib.h"
 
 
+static const int8_t  hexlist[] = "0123456789ABCDEF";
+
 static int8_t
-get_dec(const int8_t *c)
+get_decimal(const int8_t *c)
 {
 	switch (*c) {
 	case '0': return 0;
@@ -28,33 +30,30 @@ get_dec(const int8_t *c)
 int8_t *
 dec2hex(int8_t *dest, uint32_t value, uint32_t len)
 {
-	char hex[] = "0123456789ABCDEF";
-	uint32_t iter = 0;
-	while (iter < len) {
-		dest[iter] = '0';
-		iter++;
-	}
-	dest[iter] = '\0';
-
-	while (value > 0) {
-		dest[len-1] = hex[0xf & value];
+	uint32_t iter = 0, len_tmp = len;
+	while (value > 0 && len > 0) {
+		if (iter < len_tmp) {
+			/* fill leading by zero */
+			dest[iter] = '0';
+			iter++;
+			continue;
+		}
+		dest[len-1] = hexlist[0xf & value];
 		value >>= 4;
 		len--;
 	}
-
 	return dest;
 }
 
 uint8_t *
 hex2raw(uint8_t *dest, const int8_t *value)
 {
-	uint8_t c;
-	int8_t *tmp = (int8_t*)value;
+	int8_t c, *tmp = (int8_t*)value;
 	while (*tmp) {
-		c = get_dec(tmp);
+		c = get_decimal(tmp);
 		c <<= 4;
 		tmp++;
-		c |= get_dec(tmp);
+		c |= get_decimal(tmp);
 		*dest = c;
 		tmp++;
 		dest++;
@@ -66,10 +65,9 @@ int8_t *
 raw2hex(int8_t *dest, const uint8_t *value, uint32_t len)
 {
 	uint32_t i = 0, j = 0;
-	int8_t hex[] = "0123456789ABCDEF";
 	for (; i < len; i++, j += 2) {
-		dest[j + 0] = hex[0xf & (value[i] >> 4)];
-		dest[j + 1] = hex[0xf & value[i]];
+		dest[j + 0] = hexlist[0xf & (value[i] >> 4)];
+		dest[j + 1] = hexlist[0xf & value[i]];
 	}
 	dest[j] = '\0';
 	return dest;

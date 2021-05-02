@@ -5,9 +5,9 @@
 int
 main(void)
 {
-	int8_t str[100] = {0};
+	int8_t str[100];
 	puts("--- decimal to hex ---");
-	puts(dec2hex(str, 1200, 5));
+	puts(dec2hex(str, 1200, 20));
 	puts("");
 
 	int8_t *hex = "FFFFFFFF"; /* 4 byte */
