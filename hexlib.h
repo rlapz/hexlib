@@ -1,11 +1,11 @@
 #ifndef HEXLIB_H
 #define HEXLIB_H
 
-#include <stdint.h>
+#include <stddef.h>
 
-int8_t *dec2hex(int8_t *dest, uint32_t value, uint32_t len);
-uint8_t *hex2raw(uint8_t *dest, const int8_t *value);
-int8_t *raw2hex(int8_t *dest, const uint8_t *value, uint32_t len);
-
+char		*dec2hex(char *dest, int value, size_t len);
+unsigned char	*hex2raw(unsigned char *dest, const char *value);
+char		*raw2hex(char *dest, const unsigned char *value, size_t len);
+char		*ascii2hex(char *dest, const char *value, size_t len);
 
 #endif
