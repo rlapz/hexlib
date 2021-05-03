@@ -39,9 +39,8 @@ hex2raw(unsigned char *dest, const char *value)
 	unsigned char c;
 	while (*value != '\0') {
 		c = get_hex(value, value+1);
-		value++;
-		*dest = (unsigned char)c;
-		value++;
+		*dest = c;
+		value += 2;
 		dest++;
 	}
 	return dest;
