@@ -4,7 +4,7 @@
 static const char  hexlist[] = "0123456789ABCDEF";
 
 static char
-get_decimal(const char *c)
+get_hex(const char *c)
 {
 	switch (*c) {
 	case '0': return 0;
@@ -31,16 +31,16 @@ char *
 dec2hex(char *dest, int value, size_t len)
 {
 	size_t iter = 0, len_tmp = len;
-	while (value > 0 && len > 0) {
-		if (iter < len_tmp) {
-			/* fill leading by zero */
-			dest[iter] = '0';
-			iter++;
+	while (iter < len_tmp) {
+		if (value > 0) {
+			dest[len-1] = hexlist[0xf & value];
+			value >>= 4;
+			len--;
+			len_tmp--;
 			continue;
 		}
-		dest[len-1] = hexlist[0xf & value];
-		value >>= 4;
-		len--;
+		dest[iter] = '0'; /* fill leading by zero */
+		iter++;
 	}
 	return dest;
 }
@@ -50,10 +50,10 @@ hex2raw(unsigned char *dest, const char *value)
 {
 	char c;
 	while (*value != '\0') {
-		c = get_decimal(value);
+		c = get_hex(value);
 		c <<= 4;
 		value++;
-		c |= get_decimal(value);
+		c |= get_hex(value);
 		*dest = (unsigned char)c;
 		value++;
 		dest++;
