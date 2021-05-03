@@ -1,5 +1,4 @@
 #include "hexlib.h"
-#include <stdio.h>
 
 
 static const char  hexlist[] = "0123456789ABCDEF";
