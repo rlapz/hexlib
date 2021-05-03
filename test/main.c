@@ -14,8 +14,7 @@ main(void)
 	puts(dec2hex(str, 255, 2)); /* 2 digits (FF)*/
 	puts("");
 
-	/* 4 byte (hex) (0x0f, 0xff, 0xff, 0xf0)
-	 * or (decimal) (015, 255, 255, 240)
+	/* 4 byte (hex) (0x0f, 0xff, 0xff, 0xf0) or (015, 255, 255, 240)
 	 */
 	char *hex = "0ffffff0";
 	unsigned char raw[4];
@@ -30,7 +29,7 @@ main(void)
 	unsigned char byte[4] = {0xEE, 0xEE, 0xFF, 0x0A};
 	char bf[12] = {0};
 	puts("--- raw to hex ---");
-	puts(raw2hex(bf, byte, 4)); /* 4 digits (EE EE FF 0A) */
+	puts(raw2hex(bf, byte, 4)); /* 8 digits (EEEEFF0A) */
 	puts("");
 
 	char x[100] = {0};
