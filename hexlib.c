@@ -1,31 +1,8 @@
 #include "hexlib.h"
+#include <stdio.h>
 
 
 static const char  hexlist[] = "0123456789ABCDEF";
-
-static char
-get_hex(const char *c)
-{
-	switch (*c) {
-	case '0': return 0;
-	case '1': return 1;
-	case '2': return 2;
-	case '3': return 3;
-	case '4': return 4;
-	case '5': return 5;
-	case '6': return 6;
-	case '7': return 7;
-	case '8': return 8;
-	case '9': return 9;
-	case 'a': case 'A': return 10;
-	case 'b': case 'B': return 11;
-	case 'c': case 'C': return 12;
-	case 'd': case 'D': return 13;
-	case 'e': case 'E': return 14;
-	case 'f': case 'F': return 15;
-	}
-	return -1;
-}
 
 char *
 dec2hex(char *dest, int value, size_t len)
@@ -45,15 +22,24 @@ dec2hex(char *dest, int value, size_t len)
 	return dest;
 }
 
+static unsigned char
+get_hex(const char *c1, const char *c2)
+{
+	/* https://www.microchip.com/forums/FindPost/745864 */
+	unsigned char ret;
+	ret = ((*c1) <= 57 ? (*c1) - 48 : (0xf & ((*c1) - 97)) + 10) << 4;
+	ret |= (*c2) <= 57 ? (*c2) - 48 : (0xf & ((*c2) - 97)) + 10;
+
+	return ret;
+}
+
 unsigned char *
 hex2raw(unsigned char *dest, const char *value)
 {
-	char c;
+	unsigned char c;
 	while (*value != '\0') {
-		c = get_hex(value);
-		c <<= 4;
+		c = get_hex(value, value+1);
 		value++;
-		c |= get_hex(value);
 		*dest = (unsigned char)c;
 		value++;
 		dest++;
