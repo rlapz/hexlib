@@ -35,10 +35,8 @@ get_hex(const char *c1, const char *c2)
 unsigned char *
 hex2raw(unsigned char *dest, const char *value)
 {
-	unsigned char c;
 	while (*value != '\0') {
-		c = get_hex(value, value+1);
-		*dest = c;
+		*dest = get_hex(value, value+1);
 		value += 2;
 		dest++;
 	}
