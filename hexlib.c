@@ -10,7 +10,7 @@ dec2hex(char *dest, int value, size_t len)
 	while (iter < len_tmp) {
 		if (value > 0) {
 			dest[len-1] = hexlist[0xf & value];
-			value >>= 4;
+			value >>= 0x4;
 			len--;
 			len_tmp--;
 			continue;
@@ -26,7 +26,7 @@ get_hex(const char *c1, const char *c2)
 {
 	/* https://www.microchip.com/forums/FindPost/745864 */
 	unsigned char ret;
-	ret = ((*c1) <= 57 ? (*c1) - 48 : (0xf & ((*c1) - 97)) + 10) << 4;
+	ret = ((*c1) <= 57 ? (*c1) - 48 : (0xf & ((*c1) - 97)) + 10) << 0x4;
 	ret |= (*c2) <= 57 ? (*c2) - 48 : (0xf & ((*c2) - 97)) + 10;
 
 	return ret;
@@ -48,7 +48,7 @@ raw2hex(char *dest, const unsigned char *value, size_t len)
 {
 	size_t i = 0, j = 0;
 	for (; i < len; i++, j += 2) {
-		dest[j + 0] = hexlist[0xf & (value[i] >> 4)];
+		dest[j + 0] = hexlist[0xf & (value[i] >> 0x4)];
 		dest[j + 1] = hexlist[0xf & value[i]];
 	}
 	dest[j] = '\0';
