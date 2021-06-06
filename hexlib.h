@@ -1,3 +1,7 @@
+/* GPL v2.0 License
+ *
+ * Copyright (c) 2021 Arthur Lapz (rLapz)
+ */
 #ifndef HEXLIB_H
 #define HEXLIB_H
 
